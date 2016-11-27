@@ -1,0 +1,11 @@
+siemonster:
+  labels:
+    io.rancher.container.pull_image: always
+    io.rancher.container.hostname_override: container_name
+  tty: true
+  image: siemonster/app
+  volumes_from:
+  - /opt/containers:/opt/containers:ro
+  - /opt/containers/app:/opt/containers/app
+  - /var/log/containers/app:/var/log
+  stdin_open: true

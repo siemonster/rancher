@@ -1,0 +1,32 @@
+.catalog:
+  version: 1
+siemonster:
+  scale: 1
+  version: 1
+  health_check:
+    port: 80
+    interval: 2000
+    initializing_timeout: 60000
+    unhealthy_threshold: 3
+    strategy: recreate
+    request_line: GET "/" "HTTP/1.0"
+    healthy_threshold: 2
+    response_timeout: 2000
+  questions:
+    - variable: SITE_NAME
+      description: Specify the uniqe name of the site.
+      label: Site Name
+      required: true
+      default: siemonster-customer1
+      type: string
+    - variable: MSA_URL
+      description: Specify the mongo-sites-api url.
+      label: MSA URL
+      required: true
+      default: https://admin.customer-1.siemonster.com
+      type: string
+    - variable: MSA_SKEY
+      description: Specify the mongo-sites-api secret key.
+      label: MSA Secret Key
+      required: true
+      type: string
