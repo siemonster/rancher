@@ -14,10 +14,16 @@ siemonster:
     response_timeout: 2000
   questions:
     - variable: SITE_NAME
-      description: Specify the uniqe name of the site.
+      description: Specify the unique name of the site.
       label: Site Name
       required: true
       default: siemonster-customer1
+      type: string
+    - variable: SITE_REF_NAME
+      description: Specify a reference site name (from where to clone db collections).
+      label: Reference Site Name
+      required: true
+      default: siemonster
       type: string
     - variable: MSA_URL
       description: Specify the mongo-sites-api url.
