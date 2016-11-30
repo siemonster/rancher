@@ -1,17 +1,5 @@
 .catalog:
   version: 1
-siemonster:
-  scale: 1
-  version: 1
-  health_check:
-    port: 80
-    interval: 2000
-    initializing_timeout: 60000
-    unhealthy_threshold: 3
-    strategy: recreate
-    request_line: GET "/" "HTTP/1.0"
-    healthy_threshold: 2
-    response_timeout: 2000
   questions:
     - variable: SITE_NAME
       description: Specify the unique name of the site.
@@ -36,3 +24,21 @@ siemonster:
       label: MSA Secret Key
       required: true
       type: string
+    - variable: APP_REPO_URL
+      description: Specify the url to the repo of your app.
+      label: Application Repository Url
+      required: true
+      type: string
+siemonster:
+  scale: 1
+  version: 1
+  build: ${APP_REPO_URL}
+  health_check:
+    port: 80
+    interval: 2000
+    initializing_timeout: 60000
+    unhealthy_threshold: 3
+    strategy: recreate
+    request_line: GET "/" "HTTP/1.0"
+    healthy_threshold: 2
+    response_timeout: 2000
