@@ -28,11 +28,11 @@
       description: Specify the url to the repo of your app.
       label: Application Repository Url
       required: true
+      default: http://git-proxy.git-proxy/git@github.com:siemonster/Project.git
       type: string
 siemonster:
   scale: 1
   version: 1
-  build: ${APP_REPO_URL}
   health_check:
     port: 80
     interval: 2000

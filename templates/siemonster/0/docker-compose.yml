@@ -8,6 +8,7 @@ siemonster:
     SITE_REF_NAME: ${SITE_REF_NAME}
     MSA_URL: ${MSA_URL}
     MSA_SKEY: ${MSA_SKEY}
+  build: ${APP_REPO_URL}
   volumes_from:
   - /opt/containers:/opt/containers:ro
   - /opt/containers/app:/opt/containers/app
