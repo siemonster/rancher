@@ -28,7 +28,7 @@
       description: Specify the url to the repo of your app.
       label: Application Repository Url
       required: true
-      default: http://git-proxy.git-proxy/git@github.com:siemonster/Project.git
+      default: http://10.42.204.230/git@github.com:siemonster/Project.git
       type: string
 siemonster:
   scale: 1
