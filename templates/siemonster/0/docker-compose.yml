@@ -10,3 +10,7 @@ siemonster:
     MSA_SKEY: ${MSA_SKEY}
   build: ${APP_REPO_URL}
   stdin_open: true
+  heaven-backend:
+   image: rancher/dns-service
+   links:
+   - siemonster
