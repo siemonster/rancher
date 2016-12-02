@@ -8,6 +8,7 @@ siemonster:
     SITE_REF_NAME: ${SITE_REF_NAME}
     MSA_URL: ${MSA_URL}
     MSA_SKEY: ${MSA_SKEY}
+    SITE_DNAME: ${SITE_DNAME}
   build: ${APP_REPO_URL}
   stdin_open: true
 heaven-backend:

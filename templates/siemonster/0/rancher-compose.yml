@@ -30,6 +30,12 @@
       required: true
       default: http://10.42.204.230/git@github.com:siemonster/Project.git
       type: string
+    - variable: SITE_DNAME
+      description: Specify the domain name of the site.
+      label: Site domain name
+      required: true
+      default: http://siemonster1.siemonster.com
+      type: string
 siemonster:
   scale: 1
   version: 1
