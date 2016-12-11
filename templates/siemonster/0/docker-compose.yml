@@ -1,17 +1,37 @@
-siemonster:
-  labels:
-    io.rancher.container.pull_image: always
-    io.rancher.container.hostname_override: container_name
-  tty: true
-  environment:
-    SITE_NAME: ${SITE_NAME}
-    SITE_REF_NAME: ${SITE_REF_NAME}
-    MSA_URL: ${MSA_URL}
-    MSA_SKEY: ${MSA_SKEY}
-    SITE_DNAME: ${SITE_DNAME}
-  build: ${APP_REPO_URL}
-  stdin_open: true
-heaven-backend:
- image: rancher/dns-service
- links:
- - siemonster
+version: '2'
+services:
+  msa:
+    labels:
+      io.rancher.sidekicks: msa-volume
+      io.rancher.container.pull_image: always
+    tty: true
+    volumes_from:
+      - msa-volume
+    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#master:containers/msa
+    stdin_open: true
+  msa-volume:
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.start_once: 'true'
+    tty: true
+    volumes:
+      - /var/lib/mongodb
+    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#master:containers/msa-volume
+    environment:
+      ADDITIONAL_COMMAND: '( mongod --dbpath=/var/lib/mongodb --smallfiles & ); sleep 10; echo ''db.getCollection("_sites").update({_id:"siemonster"}, {$$set: {names:["admin.${SITE_DNAME}","${SITE_DNAME}"]}})'' | mongo mongo-sites; sleep 10'
+    stdin_open: true
+    command: /bin/bash
+  siemonster:
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.hostname_override: container_name
+    tty: true
+    environment:
+      SITE_DNAME: ${SITE_DNAME}
+    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git
+    stdin_open: true
+  heaven-backend:
+   image: rancher/dns-service
+   links:
+   - siemonster
+
