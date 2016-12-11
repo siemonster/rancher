@@ -18,7 +18,7 @@ services:
       - /var/lib/mongodb
     build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#master:containers/msa-volume
     environment:
-      ADDITIONA_PREPARE_COMMAND: 'echo ''db.getCollection("_sites").update({_id:"siemonster"}, {$$set: {names:["admin.${SITE_DNAME}","${SITE_DNAME}"]}})'' | mongo mongo-sites'
+      ADDITIONAL_PREPARE_COMMAND: 'echo ''db.getCollection("_sites").update({_id:"siemonster"}, {$$set: {names:["admin.${SITE_DNAME}","${SITE_DNAME}"]}})'' | mongo mongo-sites'
     stdin_open: true
     command: /bin/bash
   siemonster:
