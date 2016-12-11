@@ -7,8 +7,10 @@
       required: true
       default: siemonster1.siemonster.com
       type: string
+
 siemonster:
   scale: 1
+  retain_ip: true
   version: 1
   health_check:
     port: 80
@@ -19,7 +21,20 @@ siemonster:
     request_line: GET "/" "HTTP/1.0"
     healthy_threshold: 2
     response_timeout: 2000
-msa-volume:
-  scale: 1
+
 msa:
   scale: 1
+  retain_ip: true
+
+msa-volume:
+  scale: 1
+  retain_ip: true
+
+heaven-backend:
+  scale: 1
+  retain_ip: true
+
+411:
+  scale: 1
+  retain_ip: true
+
