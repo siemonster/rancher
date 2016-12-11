@@ -30,10 +30,14 @@ services:
       SITE_DNAME: ${SITE_DNAME}
     build: http://proxy.git-proxy/git@github.com:siemonster/Project.git
     stdin_open: true
-  heaven-backend:
+  heaven-backend-app:
    image: rancher/dns-service
    links:
    - siemonster
+  heaven-backend-admin:
+   image: rancher/dns-service
+   links:
+   - msa
   docker-images-updater:
     image: ubuntu:14.04.3
     stdin_open: true
