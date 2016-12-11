@@ -34,4 +34,14 @@ services:
    image: rancher/dns-service
    links:
    - siemonster
-
+  docker-images-updater:
+    image: ubuntu:14.04.3
+    stdin_open: true
+    volumes:
+    - /:/host
+    tty: true
+    command: chroot /host docker pull extremeprog/mongo-sites-api:feature-admin-dbclone
+    labels:
+      io.rancher.container.start_once: 'true'
+      io.rancher.container.pull_image: always
+      io.rancher.scheduler.global: 'true'
