@@ -20,7 +20,7 @@
             if ($$http_x_forwarded_proto != "https" ) {
                 return 301 https://$$host$$request_uri;
             }
-            proxy_pass http://heaven-backend.$$stack;
+            proxy_pass http://heaven-backend.siemonster-project-$$stack;
             proxy_set_header Host $$host;
             proxy_set_header X-Real-IP $$remote_addr;
             proxy_set_header Upgrade $$http_upgrade;
@@ -36,7 +36,7 @@
             if ($$http_x_forwarded_proto != "https" ) {
                 return 301 https://$$host$$request_uri;
             }
-            proxy_pass http://heaven-backend.$$stack;
+            proxy_pass http://heaven-backend.siemonster-project-$$stack;
             proxy_set_header Host $$host;
             proxy_set_header X-Real-IP $$remote_addr;
             proxy_set_header Upgrade $$http_upgrade;
