@@ -14,32 +14,32 @@
       type: multiline
       default: |
         server {
-          server_name ~^(?<service>[^.]+)\.(?<stack>[^.]+)\.[a-z0-9-]+\.[a-z]+$$;
+          server_name ~^(?<service>[^.]+)\.(?<stack>[^.]+)\.[a-z0-9-]+\.[a-z]+$;
           resolver 169.254.169.250;
           location / {
-            if ($$http_x_forwarded_proto != "https" ) {
-                return 301 https://$$host$$request_uri;
+            if ($http_x_forwarded_proto != "https" ) {
+                return 301 https://$host$request_uri;
             }
-            proxy_pass http://heaven-backend.siemonster-project-$$stack;
-            proxy_set_header Host $$host;
-            proxy_set_header X-Real-IP $$remote_addr;
-            proxy_set_header Upgrade $$http_upgrade;
+            proxy_pass http://heaven-backend.siemonster-project-$stack;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header Upgrade $http_upgrade;
             proxy_set_header Connection "upgrade";
           }
         }
 
 
         server {
-          server_name ~^(?<service>[^.]+)\.(?<stack>[^.]+)\.[a-z0-9-]+\.[a-z0-9-]+\.[a-z]+$$;
+          server_name ~^(?<service>[^.]+)\.(?<stack>[^.]+)\.[a-z0-9-]+\.[a-z0-9-]+\.[a-z]+$;
           resolver 169.254.169.250;
           location / {
-            if ($$http_x_forwarded_proto != "https" ) {
-                return 301 https://$$host$$request_uri;
+            if ($http_x_forwarded_proto != "https" ) {
+                return 301 https://$host$request_uri;
             }
-            proxy_pass http://heaven-backend.siemonster-project-$$stack;
-            proxy_set_header Host $$host;
-            proxy_set_header X-Real-IP $$remote_addr;
-            proxy_set_header Upgrade $$http_upgrade;
+            proxy_pass http://heaven-backend.siemonster-project-$stack;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header Upgrade $http_upgrade;
             proxy_set_header Connection "upgrade";
           }
         }
