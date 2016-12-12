@@ -1,0 +1,4 @@
+name: "Heaven for SIEMonster"
+description: "HTTP balancer for simple docker deployments. Contains config for handling addresses like http(s)://{service_name}.{stack_name}.{domain_name}"
+category: Utils
+version: 1

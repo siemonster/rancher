@@ -1,0 +1,47 @@
+.catalog:
+  version: 1
+  questions:
+    - variable: CONTAINER_DNS_TEMPLATE
+      description: "Specify how heaven's nginx will find your services. Possible variables are $name and $version for patterns: $name.domain.com, $version.$name.domain.com, $name.subdomain.domain.com, $version.$name.subdomain.domain.com."
+      label: "Container's DNS template"
+      required: true
+      type: string
+      default: heaven-backend.$name
+    - variable: ADDITIONAL_CONFIG
+      description: "Add your own nginx config."
+      label: "Additional NGINX config"
+      required: false
+      type: multiline
+      default: |
+        server {
+          server_name ~^(?<service>[^.]+)\.(?<stack>[^.]+)\.[a-z0-9-]+\.[a-z]+$$;
+          resolver 169.254.169.250;
+          location / {
+            if ($$http_x_forwarded_proto != "https" ) {
+                return 301 https://$$host$$request_uri;
+            }
+            proxy_pass http://heaven-backend-$$service.$$stack;
+            proxy_set_header Host $$host;
+            proxy_set_header X-Real-IP $$remote_addr;
+            proxy_set_header Upgrade $$http_upgrade;
+            proxy_set_header Connection "upgrade";
+          }
+        }
+
+
+        server {
+          server_name ~^(?<service>[^.]+)\.(?<stack>[^.]+)\.[a-z0-9-]+\.[a-z0-9-]+\.[a-z]+$$;
+          resolver 169.254.169.250;
+          location / {
+            if ($$http_x_forwarded_proto != "https" ) {
+                return 301 https://$$host$$request_uri;
+            }
+            proxy_pass http://heaven-backend-$$service.$$stack;
+            proxy_set_header Host $$host;
+            proxy_set_header X-Real-IP $$remote_addr;
+            proxy_set_header Upgrade $$http_upgrade;
+            proxy_set_header Connection "upgrade";
+          }
+        }
+heaven-frontend:
+  scale: 1
