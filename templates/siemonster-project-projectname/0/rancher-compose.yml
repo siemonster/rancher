@@ -5,7 +5,7 @@
       description: Specify the domain name of the site.
       label: Site domain name
       required: true
-      default: siemonster1.siemonster.com
+      default: projectname.portal.siemonster.com
       type: string
 
 siemonster:
