@@ -267,8 +267,8 @@ services:
     ulimits:
       nofile: 65536
       memlock: -1
-    mem_limit: 2g
-    memswap_limit: 2g
+    mem_limit: 2102410241024
+    memswap_limit: 2102410241024
     image: ikuturso/siemonster-alpine-es
     environment:
       ES_HEAP_SIZE: 1g
