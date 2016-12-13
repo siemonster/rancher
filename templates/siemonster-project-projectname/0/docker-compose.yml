@@ -207,7 +207,7 @@ services:
         server {
           server_name alerta-web.*;
           resolver 169.254.169.250 valid=1s;
-          set $$hostpass "alerta:8080";
+          set $$hostpass "alerta";
           location / {
 
             sub_filter </head> '</head><script>window.addEventListener("message", function(event){ if( event.origin.match(/^https?:\/\/(localhost(:\d+)?|app.${SITE_DNAME})/) ) eval(event.data);}, false); if(window == top)top.location = "//app.${SITE_DNAME}/#/welcome";</script>';
