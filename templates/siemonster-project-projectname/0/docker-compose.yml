@@ -6,7 +6,7 @@ services:
     environment:
       SITE_DNAME: ${SITE_DNAME}
       SITE_NAME: siemonster
-      MSA_URL: https://admin.${SITE_DNAME}
+      MSA_URL: //admin.${SITE_DNAME}
     stdin_open: true
     tty: true
     labels:
@@ -16,7 +16,7 @@ services:
   msa:
     build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#master:containers/msa
     environment:
-      ADDITIONAL_PREPARE_COMMAND: 'echo ''db.getCollection("_sites").update({_id:"siemonster"}, {$$set: {names:["admin.${SITE_DNAME}","app.${SITE_DNAME}","${SITE_DNAME}"]}})'' | mongo mongo-sites'
+      ADDITIONAL_PREPARE_COMMAND: 'echo ''db.getCollection("_sites").update({_id:"siemonster"}, {$$set: {names:["admin.${SITE_DNAME}","app.${SITE_DNAME}","${SITE_DNAME}"]}})'' | mongo mongo-sites; SITE_NAME=siemonster SITE_DOMAIN=${SITE_DNAME} node update-apps-links.js'
     stdin_open: true
     tty: true
     volumes_from:
@@ -102,6 +102,14 @@ services:
       io.rancher.scheduler.global: 'true'
 
   411:
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.hostname_override: container_name
+    tty: true
+    image: ikuturso/siemonster-411
+    stdin_open: true
+
+  ir:
     labels:
       io.rancher.container.pull_image: always
       io.rancher.container.hostname_override: container_name
