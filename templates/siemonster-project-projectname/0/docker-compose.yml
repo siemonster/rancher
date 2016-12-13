@@ -220,7 +220,7 @@ services:
       io.rancher.container.pull_image: always
       io.rancher.scheduler.global: 'true'
 
-  411:
+  '411':
     labels:
       io.rancher.container.pull_image: always
       io.rancher.container.hostname_override: container_name
@@ -228,7 +228,7 @@ services:
     tty: true
     volumes_from:
     - 411-volume
-    build: 411
+    build: '411'
     stdin_open: true
 
   411-volume:
@@ -256,7 +256,7 @@ services:
     tty: true
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
-    link:
+    links:
     - es-client:elasticsearch
     image: ingensi/dockbeat
     stdin_open: true
@@ -265,29 +265,29 @@ services:
     cap_add:
     - IPC_LOCK
     ulimits:
-      nofile: 65536:65536
-      memlock: -1:-1
+      nofile: 65536
+      memlock: -1
     mem_limit: 2g
     memswap_limit: 2g
+    image: ikuturso/siemonster-alpine-es
     environment:
       ES_HEAP_SIZE: 1g
       ES_JAVA_OPTS: -Dmapper.allow_dots_in_name=true
-      image: ikuturso/siemonster-alpine-es
-      command:
-      - -Des.bootstrap.mlockall=true
-      - -Des.network.publish_host=$hostip
-      - -Des.network.host=_eth0_
-      - -Des.discovery.zen.ping.multicast.enabled=false
-      - -Des.node.name="node-capricorn"
-      - -Des.cluster.name="siemonster"
-      - -Des.discovery.zen.minimum_master_nodes=2
-      - -Des.discovery.zen.ping.unicast.hosts="$protip"
-      - -Des.index.number_of_shards=1
-      - -Des.index.refresh_interval=10s
-      - -Des.index.translog.flush_threshold=20000
-      - -Des.action.auto_create_index=true
-      - -Des.action.disable_delete_all_indices=true
-      - -Des.node.data=false
+      command: >
+        -Des.bootstrap.mlockall=true
+        -Des.network.publish_host=$hostip
+        -Des.network.host=_eth0_
+        -Des.discovery.zen.ping.multicast.enabled=false
+        -Des.node.name="node-capricorn"
+        -Des.cluster.name="siemonster"
+        -Des.discovery.zen.minimum_master_nodes=2
+        -Des.discovery.zen.ping.unicast.hosts="$protip"
+        -Des.index.number_of_shards=1
+        -Des.index.refresh_interval=10s
+        -Des.index.translog.flush_threshold=20000
+        -Des.action.auto_create_index=true
+        -Des.action.disable_delete_all_indices=true
+        -Des.node.data=false
 
   es2graphite:
     labels:
@@ -295,7 +295,7 @@ services:
       io.rancher.container.hostname_override: container_name
     tty: true
     stdin_open: true
-    link:
+    links:
     - es-client
     - health
     environment:
@@ -324,7 +324,7 @@ services:
       io.rancher.container.hostname_override: container_name
     tty: true
     stdin_open: true
-    link:
+    links:
     - es-client:es-client
     build: kibana
 
@@ -345,7 +345,7 @@ services:
     stdin_open: true
     volumes_from:
     - reporting-volume
-    link:
+    links:
     - es-client:es-client
     - kibana:sm-kibana
     image: ikuturso/siemonster-reporting-4
@@ -362,7 +362,7 @@ services:
     - /opt/skedler/reports
     - /opt/skedler/logs
     - /opt/skedler/preview
-    link:
+    links:
     - es-client:es-client
     - kibana:sm-kibana
     build: reporting-volume
