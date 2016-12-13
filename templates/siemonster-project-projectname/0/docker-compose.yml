@@ -364,7 +364,7 @@ services:
     - es-client:es-client
     - kibana:sm-kibana
     build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#master:containers/reporting-volume
-    cmd: /bin/bash
+    command: /bin/bash
 
   info:
     labels:
