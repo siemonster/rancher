@@ -240,6 +240,7 @@ services:
     - /data
     build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#master:containers/411-volume
     stdin_open: true
+    command: /bin/bash
 
   ir:
     labels:
@@ -325,7 +326,7 @@ services:
     tty: true
     stdin_open: true
     links:
-    - es-client:es-client
+    - es-client:elasticsearch
     build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#master:containers/kibana
 
   minemeld:
@@ -358,14 +359,12 @@ services:
     stdin_open: true
     volumes:
     - /root/.local/share/data/bconf
-    - /opt/skedler/config/reporting.yml
-    - /opt/skedler/reports
-    - /opt/skedler/logs
-    - /opt/skedler/preview
+    - /opt/skedler
     links:
     - es-client:es-client
     - kibana:sm-kibana
     build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#master:containers/reporting-volume
+    cmd: /bin/bash
 
   info:
     labels:
