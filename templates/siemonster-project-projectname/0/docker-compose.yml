@@ -228,7 +228,7 @@ services:
     tty: true
     volumes_from:
     - 411-volume
-    build: '411'
+    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#master:containers/411
     stdin_open: true
 
   411-volume:
@@ -238,7 +238,7 @@ services:
     tty: true
     volumes:
     - /data
-    build: 411-volume
+    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#master:containers/411-volume
     stdin_open: true
 
   ir:
@@ -326,7 +326,7 @@ services:
     stdin_open: true
     links:
     - es-client:es-client
-    build: kibana
+    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#master:containers/kibana
 
   minemeld:
     labels:
@@ -365,7 +365,7 @@ services:
     links:
     - es-client:es-client
     - kibana:sm-kibana
-    build: reporting-volume
+    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#master:containers/reporting-volume
 
   info:
     labels:
