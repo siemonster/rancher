@@ -328,21 +328,21 @@ services:
     environment:
       ES_HEAP_SIZE: 1g
       ES_JAVA_OPTS: -Dmapper.allow_dots_in_name=true
-      command: >
-        -Des.bootstrap.mlockall=true
-        -Des.network.publish_host=$hostip
-        -Des.network.host=_eth0_
-        -Des.discovery.zen.ping.multicast.enabled=false
-        -Des.node.name="node-capricorn"
-        -Des.cluster.name="siemonster"
-        -Des.discovery.zen.minimum_master_nodes=2
-        -Des.discovery.zen.ping.unicast.hosts="$protip"
-        -Des.index.number_of_shards=1
-        -Des.index.refresh_interval=10s
-        -Des.index.translog.flush_threshold=20000
-        -Des.action.auto_create_index=true
-        -Des.action.disable_delete_all_indices=true
-        -Des.node.data=false
+    command: >
+      -Des.bootstrap.mlockall=true
+      -Des.network.publish_host=$hostip
+      -Des.network.host=_eth0_
+      -Des.discovery.zen.ping.multicast.enabled=false
+      -Des.node.name="node-capricorn"
+      -Des.cluster.name="siemonster"
+      -Des.discovery.zen.minimum_master_nodes=2
+      -Des.discovery.zen.ping.unicast.hosts="$protip"
+      -Des.index.number_of_shards=1
+      -Des.index.refresh_interval=10s
+      -Des.index.translog.flush_threshold=20000
+      -Des.action.auto_create_index=true
+      -Des.action.disable_delete_all_indices=true
+      -Des.node.data=false
 
   es2graphite:
     labels:
