@@ -285,7 +285,7 @@ services:
     build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#master:containers/411
     stdin_open: true
     links:
-      es-client
+      - es-client
     hostname: 411.${DNAME}
 
   411-volume:
