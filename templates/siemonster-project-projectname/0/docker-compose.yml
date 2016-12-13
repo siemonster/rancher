@@ -70,6 +70,20 @@ services:
         }
 
         server {
+          server_name ir.*;
+          resolver 169.254.169.250 valid=1s;
+          set $$hostpass "ir:8000";
+          location / {
+            proxy_pass http://$$hostpass;
+            proxy_set_header Accept-Encoding "";
+            proxy_set_header Host $$host;
+            proxy_set_header X-Real-IP $$remote_addr;
+            proxy_set_header Upgrade $$http_upgrade;
+            proxy_set_header Connection "upgrade";
+          }
+        }
+
+        server {
           server_name ~^(?<service>[^.]+)\.(?<stack>[^.]+)\.[a-z0-9-]+\.[a-z0-9-]+\.[a-z]+$$;
           resolver 169.254.169.250 valid=1s;
           location / {
