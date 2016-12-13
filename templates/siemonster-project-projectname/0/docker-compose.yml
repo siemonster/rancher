@@ -70,12 +70,14 @@ services:
         }
 
         server {
-          server_name ir.*;
+          server_name 411.*;
           resolver 169.254.169.250 valid=1s;
-          set $$hostpass "ir:8000";
+          set $$hostpass "411";
           location / {
 
             sub_filter </head> '</head><script>window.addEventListener("message", function(event){ if( event.origin.match(/^https?:\/\/(localhost(:\d+)?|app.${SITE_DNAME})/) ) eval(event.data);}, false); if(window == top)top.location = "//app.${SITE_DNAME}/#/welcome";</script>';
+            sub_filter_once on;
+            sub_filter_types *;
 
             proxy_pass http://$$hostpass;
             proxy_set_header Accept-Encoding "";
@@ -87,12 +89,52 @@ services:
         }
 
         server {
-          server_name kibana.*;
+          server_name minemeld.*;
+          resolver 169.254.169.250 valid=1s;
+          set $$hostpass "minemeld";
+          location / {
+
+            sub_filter </head> '</head><script>window.addEventListener("message", function(event){ if( event.origin.match(/^https?:\/\/(localhost(:\d+)?|app.${SITE_DNAME})/) ) eval(event.data);}, false); if(window == top)top.location = "//app.${SITE_DNAME}/#/welcome";</script>';
+            sub_filter_once on;
+            sub_filter_types *;
+
+            proxy_pass http://$$hostpass;
+            proxy_set_header Accept-Encoding "";
+            proxy_set_header Host $$host;
+            proxy_set_header X-Real-IP $$remote_addr;
+            proxy_set_header Upgrade $$http_upgrade;
+            proxy_set_header Connection "upgrade";
+          }
+        }
+
+        server {
+          server_name ir.*;
+          resolver 169.254.169.250 valid=1s;
+          set $$hostpass "ir:8000";
+          location / {
+
+            sub_filter </head> '</head><script>window.addEventListener("message", function(event){ if( event.origin.match(/^https?:\/\/(localhost(:\d+)?|app.${SITE_DNAME})/) ) eval(event.data);}, false); if(window == top)top.location = "//app.${SITE_DNAME}/#/welcome";</script>';
+            sub_filter_once on;
+            sub_filter_types *;
+
+            proxy_pass http://$$hostpass;
+            proxy_set_header Accept-Encoding "";
+            proxy_set_header Host $$host;
+            proxy_set_header X-Real-IP $$remote_addr;
+            proxy_set_header Upgrade $$http_upgrade;
+            proxy_set_header Connection "upgrade";
+          }
+        }
+
+        server {
+          server_name sm-kibana.*;
           resolver 169.254.169.250 valid=1s;
           set $$hostpass "kibana:5606";
           location / {
 
             sub_filter </head> '</head><script>window.addEventListener("message", function(event){ if( event.origin.match(/^https?:\/\/(localhost(:\d+)?|app.${SITE_DNAME})/) ) eval(event.data);}, false); if(window == top)top.location = "//app.${SITE_DNAME}/#/welcome";</script>';
+            sub_filter_once on;
+            sub_filter_types *;
 
             proxy_pass http://$$hostpass;
             proxy_set_header Accept-Encoding "";
@@ -110,6 +152,8 @@ services:
           location / {
 
             sub_filter </head> '</head><script>window.addEventListener("message", function(event){ if( event.origin.match(/^https?:\/\/(localhost(:\d+)?|app.${SITE_DNAME})/) ) eval(event.data);}, false); if(window == top)top.location = "//app.${SITE_DNAME}/#/welcome";</script>';
+            sub_filter_once on;
+            sub_filter_types *;
 
             proxy_pass http://$$hostpass;
             proxy_set_header Accept-Encoding "";
@@ -127,6 +171,8 @@ services:
           location / {
 
             sub_filter </head> '</head><script>window.addEventListener("message", function(event){ if( event.origin.match(/^https?:\/\/(localhost(:\d+)?|app.${SITE_DNAME})/) ) eval(event.data);}, false); if(window == top)top.location = "//app.${SITE_DNAME}/#/welcome";</script>';
+            sub_filter_once on;
+            sub_filter_types *;
 
             proxy_pass http://$$hostpass;
             proxy_set_header Accept-Encoding "";
@@ -144,6 +190,8 @@ services:
           location / {
 
             sub_filter </head> '</head><script>window.addEventListener("message", function(event){ if( event.origin.match(/^https?:\/\/(localhost(:\d+)?|app.${SITE_DNAME})/) ) eval(event.data);}, false); if(window == top)top.location = "//app.${SITE_DNAME}/#/welcome";</script>';
+            sub_filter_once on;
+            sub_filter_types *;
 
             proxy_pass http://$$hostpass;
             proxy_set_header Accept-Encoding "";
@@ -155,12 +203,14 @@ services:
         }
 
         server {
-          server_name alerta.*;
+          server_name alerta-web.*;
           resolver 169.254.169.250 valid=1s;
           set $$hostpass "alerta:8080";
           location / {
 
             sub_filter </head> '</head><script>window.addEventListener("message", function(event){ if( event.origin.match(/^https?:\/\/(localhost(:\d+)?|app.${SITE_DNAME})/) ) eval(event.data);}, false); if(window == top)top.location = "//app.${SITE_DNAME}/#/welcome";</script>';
+            sub_filter_once on;
+            sub_filter_types *;
 
             proxy_pass http://$$hostpass;
             proxy_set_header Accept-Encoding "";
@@ -174,10 +224,12 @@ services:
         server {
           server_name splogtash.*;
           resolver 169.254.169.250 valid=1s;
-          set $$hostpass "splogtash:8080";
+          set $$hostpass "splogtash:8087";
           location / {
 
             sub_filter </head> '</head><script>window.addEventListener("message", function(event){ if( event.origin.match(/^https?:\/\/(localhost(:\d+)?|app.${SITE_DNAME})/) ) eval(event.data);}, false); if(window == top)top.location = "//app.${SITE_DNAME}/#/welcome";</script>';
+            sub_filter_once on;
+            sub_filter_types *;
 
             proxy_pass http://$$hostpass;
             proxy_set_header Accept-Encoding "";
