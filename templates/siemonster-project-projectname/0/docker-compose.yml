@@ -284,6 +284,7 @@ services:
     - 411-volume
     build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#master:containers/411
     stdin_open: true
+    hostname: 411.${DNAME}
 
   411-volume:
     labels:
