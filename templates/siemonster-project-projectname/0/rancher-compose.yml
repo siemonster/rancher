@@ -37,6 +37,4 @@ heaven-backend:
 411:
   scale: 1
   retain_ip: true
-  hostname: 411.${SITE_DNAME}
-
 

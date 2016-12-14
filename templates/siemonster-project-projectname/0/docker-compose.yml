@@ -286,6 +286,8 @@ services:
     stdin_open: true
     links:
     - es-client
+    cap_add:
+    - SYS_ADMIN
     environment:
       HOST: 411.${SITE_DNAME}
 
