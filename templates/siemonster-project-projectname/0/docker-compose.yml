@@ -286,7 +286,8 @@ services:
     stdin_open: true
     links:
       - es-client
-    hostname: 411.${DNAME}
+    environment:
+      HOST: 411.${DNAME}
 
   411-volume:
     labels:
