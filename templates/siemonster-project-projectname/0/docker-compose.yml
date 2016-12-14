@@ -319,6 +319,17 @@ services:
     image: ingensi/dockbeat
     stdin_open: true
 
+  collectl:
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.scheduler.global: 'true'
+    tty: true
+    environment:
+      COLLECTL_ARGS: --export graphite,capricorn
+    net: host
+    image: ikuturso/siemonster-collectl
+    stdin_open: true
+
   es-client:
     cap_add:
     - IPC_LOCK
