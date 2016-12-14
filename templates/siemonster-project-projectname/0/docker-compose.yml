@@ -326,7 +326,7 @@ services:
     tty: true
     environment:
       COLLECTL_ARGS: --export graphite,capricorn
-    net: host
+    network_mode: host
     image: ikuturso/siemonster-collectl
     stdin_open: true
 
