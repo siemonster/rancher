@@ -277,7 +277,6 @@ services:
   '411':
     labels:
       io.rancher.container.pull_image: always
-      io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: 411-volume
     tty: true
     volumes_from:
@@ -288,8 +287,7 @@ services:
     - es-client
     cap_add:
     - SYS_ADMIN
-    environment:
-      HOST: 411.${SITE_DNAME}
+    hostname: 411.${SITE_DNAME}
 
   411-volume:
     labels:
@@ -314,6 +312,7 @@ services:
     labels:
       io.rancher.container.pull_image: always
       io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.global: 'true'
     tty: true
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
