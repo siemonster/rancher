@@ -15,7 +15,6 @@ services:
       ES_JAVA_OPTS: -Dmapper.allow_dots_in_name=true
     command: >
       -Des.bootstrap.mlockall=true
-      -Des.network.publish_host=0.0.0.0
       -Des.network.host=_eth0_
       -Des.discovery.zen.ping.multicast.enabled=false
       -Des.node.name="node-capricorn"
