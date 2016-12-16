@@ -358,6 +358,37 @@ services:
       -Des.action.disable_delete_all_indices=true
       -Des.node.data=false
 
+  es-data-node:
+    volumes:
+    - /usr/share/elasticsearch/data
+    cap_add:
+    - IPC_LOCK
+    ulimits:
+      nofile: 65536
+      memlock: -1
+    mem_limit: 4102410241024
+    memswap_limit: 4102410241024
+    environment:
+      ES_HEAP_SIZE: 2g
+    image: ikuturso/siemonster-alpine-es
+    command:
+      -Des.bootstrap.mlockall=true \
+      -Des.discovery.zen.ping.multicast.enabled=false \
+      -Des.node.name="node-kraken" \
+      -Des.cluster.name="siemonster" \
+      -Des.discovery.zen.minimum_master_nodes=2 \
+      -Des.discovery.zen.ping.unicast.hosts="$protip, $tiamip" \
+      -Des.cluster.routing.allocation.awareness.attributes=disk_type \
+      -Des.node.disk_type=ssd \
+      -Des.node.data=true \
+      -Des.index.number_of_shards=3 \
+      -Des.index.refresh_interval=10s \
+      -Des.index.translog.flush_threshold=20000 \
+      -Des.action.auto_create_index=true \
+      -Des.action.disable_delete_all_indices=true \
+      -Des.threadpool.bulk.queue_size=500
+
+
   es2graphite:
     labels:
       io.rancher.container.pull_image: always
@@ -396,6 +427,8 @@ services:
     links:
     - es-client:elasticsearch
     build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#master:containers/kibana
+
+
 
   minemeld:
     labels:
