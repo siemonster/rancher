@@ -21,7 +21,7 @@ services:
       -Des.node.name="node-capricorn"
       -Des.cluster.name="siemonster"
       -Des.discovery.zen.minimum_master_nodes=2
-      -Des.discovery.zen.ping.unicast.hosts="es-data-node1 es-data-node2"
+      -Des.discovery.zen.ping.unicast.hosts="es-data-node1,es-data-node2"
       -Des.index.number_of_shards=1
       -Des.index.refresh_interval=10s
       -Des.index.translog.flush_threshold=20000
@@ -49,7 +49,7 @@ services:
       -Des.node.name="node-kraken"
       -Des.cluster.name="siemonster"
       -Des.discovery.zen.minimum_master_nodes=2
-      -Des.discovery.zen.ping.unicast.hosts="$protip, $tiamip"
+      -Des.discovery.zen.ping.unicast.hosts="es-data-node1,es-data-node2"
       -Des.cluster.routing.allocation.awareness.attributes=disk_type
       -Des.node.disk_type=ssd
       -Des.node.data=true
@@ -79,7 +79,7 @@ services:
       -Des.node.name="node-kraken"
       -Des.cluster.name="siemonster"
       -Des.discovery.zen.minimum_master_nodes=2
-      -Des.discovery.zen.ping.unicast.hosts="$protip, $tiamip"
+      -Des.discovery.zen.ping.unicast.hosts="es-data-node1,es-data-node2"
       -Des.cluster.routing.allocation.awareness.attributes=disk_type
       -Des.node.disk_type=ssd
       -Des.node.data=true
