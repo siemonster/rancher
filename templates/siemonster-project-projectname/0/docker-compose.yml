@@ -474,7 +474,7 @@ services:
       io.rancher.scheduler.affinity:host_label: tiamat=1
       io.rancher.sidekicks: es-data-node2-volume
 
-  es-data-node1-volume:
+  es-data-node2-volume:
     labels:
       io.rancher.container.pull_image: always
       io.rancher.container.hostname_override: container_name
