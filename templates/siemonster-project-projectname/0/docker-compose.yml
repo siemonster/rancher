@@ -350,7 +350,7 @@ services:
     command: >
       -Des.bootstrap.mlockall=true
       -Des.discovery.zen.ping.multicast.enabled=false
-      -Des.node.name="node-capricorn"
+      -Des.node.name="node-proteus"
       -Des.cluster.name="siemonster"
       -Des.discovery.zen.minimum_master_nodes=2
       -Des.discovery.zen.ping.unicast.hosts="es-data-node1,es-data-node2"
