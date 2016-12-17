@@ -651,7 +651,7 @@ services:
     image: ikuturso/siemonster-splogtash-1
 
   log-volumes:
-    image: ubuntu
+    image: ubuntu:14.04.3
     command: /bin/bash
     tty: true
     stdin_open: true
