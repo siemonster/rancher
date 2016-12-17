@@ -7,6 +7,13 @@
       required: true
       default: projectname.portal.siemonster.com
       type: string
+    - variable: BRANCH_NAME
+      description: Specify the branch name to checkout.
+      label: Branch name
+      required: true
+      default: master
+      type: string
+
 
 siemonster:
   scale: 1

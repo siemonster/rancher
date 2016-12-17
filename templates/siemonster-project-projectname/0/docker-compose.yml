@@ -14,7 +14,7 @@ services:
       io.rancher.container.hostname_override: container_name
 
   msa:
-    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#master:containers/msa
+    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/msa
     environment:
       ADDITIONAL_PREPARE_COMMAND: 'echo ''db.getCollection("_sites").update({_id:"siemonster"}, {$$set: {names:["admin.${SITE_DNAME}","app.${SITE_DNAME}","${SITE_DNAME}"]}})'' | mongo mongo-sites; SITE_NAME=siemonster SITE_DOMAIN=${SITE_DNAME} node update-apps-links.js'
     stdin_open: true
@@ -26,7 +26,7 @@ services:
       io.rancher.sidekicks: msa-volume
 
   msa-volume:
-    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#master:containers/msa-volume
+    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/msa-volume
     stdin_open: true
     volumes:
     - /var/lib/mongodb
@@ -281,7 +281,7 @@ services:
     tty: true
     volumes_from:
     - 411-volume
-    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#master:containers/411
+    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/411
     stdin_open: true
     links:
     - es-client
@@ -294,7 +294,7 @@ services:
     tty: true
     volumes:
     - /data
-    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#master:containers/411-volume
+    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/411-volume
     stdin_open: true
     command: /bin/bash
 
@@ -454,7 +454,7 @@ services:
     stdin_open: true
     links:
     - es-client:elasticsearch
-    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#master:containers/kibana
+    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/kibana
 
   minemeld:
     labels:
@@ -462,7 +462,7 @@ services:
       io.rancher.container.hostname_override: container_name
     tty: true
     stdin_open: true
-    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#master:containers/minemeld
+    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/minemeld
 
   ossec:
     labels:
@@ -517,7 +517,7 @@ services:
     links:
     - es-client:es-client
     - kibana:sm-kibana
-    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#master:containers/reporting-volume
+    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/reporting-volume
     command: /bin/bash
 
   info:
