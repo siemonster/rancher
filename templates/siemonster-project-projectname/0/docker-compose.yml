@@ -477,7 +477,7 @@ services:
     labels:
       io.rancher.container.pull_image: always
       io.rancher.container.hostname_override: container_name
-      io.rancher.scheduler.affinity:host_label: capricorn=1
+      io.rancher.scheduler.affinity:host_label: proteus=1
     tty: true
     stdin_open: true
     volumes:
@@ -498,6 +498,7 @@ services:
     labels:
       io.rancher.container.pull_image: always
       io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity:host_label: capricorn=1
     tty: true
     stdin_open: true
     links:
