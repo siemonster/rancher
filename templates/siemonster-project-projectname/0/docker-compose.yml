@@ -607,25 +607,14 @@ services:
     stdin_open: true
     image: trinitronx/python-simplehttpserver
 
-  alerta-db:
-    labels:
-      io.rancher.container.pull_image: always
-      io.rancher.container.hostname_override: container_name
-    tty: true
-    stdin_open: true
-    image: mongo
-    volumes:
-      - /data/db
-
   alerta:
     labels:
       io.rancher.container.pull_image: always
       io.rancher.container.hostname_override: container_name
+      io.rancher.sidekicks: alerta-db
     tty: true
     stdin_open: true
     image: ikuturso/siemonster-siren
-    depends_on:
-      - alerta-db
     environment:
       - AUTH_REQUIRED=False
       - ADMIN_USERS=not-set
@@ -642,22 +631,32 @@ services:
       - ALLOWED_ENVIRONMENTS=Production,Development
       - MONGO_URI=mongodb://alerta-db:27017/monitoring
 
-#  splogtash:
-#    labels:
-#      io.rancher.container.pull_image: always
-#      io.rancher.container.hostname_override: container_name
-#      io.rancher.scheduler.affinity:host_label: capricorn=1
-#    tty: true
-#    stdin_open: true
-#    image: ikuturso/siemonster-splogtash-1
-#
-#  log-volumes:
-#    image: ubuntu
-#    command: /bin/bash
-#    tty: true
-#    stdin_open: true
-#    volumes:
-#      - /var/log
+  alerta-db:
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.hostname_override: container_name
+    tty: true
+    stdin_open: true
+    image: mongo
+    volumes:
+      - /data/db
+
+  splogtash:
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity:host_label: capricorn=1
+    tty: true
+    stdin_open: true
+    image: ikuturso/siemonster-splogtash-1
+
+  log-volumes:
+    image: ubuntu
+    command: /bin/bash
+    tty: true
+    stdin_open: true
+    volumes:
+      - /var/log
 
   logstash:
     labels:
