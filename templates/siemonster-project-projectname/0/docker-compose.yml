@@ -439,7 +439,7 @@ services:
     build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/es-data-node1-volume
     command: /bin/bash
     labels:
-      io.rancher.scheduler.affinity:host_label: tiamat=1
+      io.rancher.scheduler.affinity:host_label: kraken=1
 
   es-data-node2:
     volumes_from:
