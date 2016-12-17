@@ -278,19 +278,21 @@ services:
     labels:
       io.rancher.container.pull_image: always
       io.rancher.sidekicks: 411-volume
+      io.rancher.scheduler.affinity: host_label: capricorn=1
     tty: true
     volumes_from:
     - 411-volume
     build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/411
     stdin_open: true
     links:
-    - es-client
+    - es-client-2:es-client
     hostname: 411.${SITE_DNAME}
 
   411-volume:
     labels:
       io.rancher.container.pull_image: always
       io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity: host_label: capricorn=1
     tty: true
     volumes:
     - /data
@@ -302,6 +304,7 @@ services:
     labels:
       io.rancher.container.pull_image: always
       io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity: host_label: capricorn=1
     tty: true
     image: ikuturso/siemonster-ir
     stdin_open: true
@@ -315,7 +318,7 @@ services:
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     links:
-    - es-client:elasticsearch
+    - es-client-1:elasticsearch
     image: ingensi/dockbeat
     stdin_open: true
 
@@ -325,12 +328,12 @@ services:
       io.rancher.scheduler.global: 'true'
     tty: true
     environment:
-      COLLECTL_ARGS: --export graphite,capricorn
+      COLLECTL_ARGS: --export graphite,health
     network_mode: host
     image: ikuturso/siemonster-collectl
     stdin_open: true
 
-  es-client:
+  es-client-1:
     cap_add:
     - IPC_LOCK
     ulimits:
@@ -356,6 +359,37 @@ services:
       -Des.action.disable_delete_all_indices=true
       -Des.node.data=false
     hostname: capricorn
+    labels:
+      io.rancher.scheduler.affinity: host_label: proteus=1
+
+  es-client-2:
+    cap_add:
+    - IPC_LOCK
+    ulimits:
+      nofile: 65536
+      memlock: -1
+    mem_limit: 2102410241024
+    memswap_limit: 2102410241024
+    image: ikuturso/siemonster-alpine-es
+    environment:
+      ES_HEAP_SIZE: 1g
+      ES_JAVA_OPTS: -Dmapper.allow_dots_in_name=true
+    command: >
+      -Des.bootstrap.mlockall=true
+      -Des.discovery.zen.ping.multicast.enabled=false
+      -Des.node.name="node-capricorn"
+      -Des.cluster.name="siemonster"
+      -Des.discovery.zen.minimum_master_nodes=2
+      -Des.discovery.zen.ping.unicast.hosts="es-data-node1,es-data-node2"
+      -Des.index.number_of_shards=1
+      -Des.index.refresh_interval=10s
+      -Des.index.translog.flush_threshold=20000
+      -Des.action.auto_create_index=true
+      -Des.action.disable_delete_all_indices=true
+      -Des.node.data=false
+    hostname: capricorn
+    labels:
+      io.rancher.scheduler.affinity: host_label: capricorn=1
 
   es-data-node1:
     volumes:
@@ -386,6 +420,8 @@ services:
       -Des.action.auto_create_index=true
       -Des.action.disable_delete_all_indices=true
       -Des.threadpool.bulk.queue_size=500
+    labels:
+      io.rancher.scheduler.affinity: host_label: kraken=1
 
   es-data-node2:
     volumes:
@@ -416,15 +452,18 @@ services:
       -Des.action.auto_create_index=true
       -Des.action.disable_delete_all_indices=true
       -Des.threadpool.bulk.queue_size=500
+    labels:
+      io.rancher.scheduler.affinity: host_label: tiamat=1
 
   es2graphite:
     labels:
       io.rancher.container.pull_image: always
       io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity: host_label: capricorn=1
     tty: true
     stdin_open: true
     links:
-    - es-client
+    - es-client-1:es-client
     - health
     environment:
       ELASTICSEARCH_ADDR: es-client
@@ -438,12 +477,21 @@ services:
     labels:
       io.rancher.container.pull_image: always
       io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity: host_label: capricorn=1
     tty: true
     stdin_open: true
     volumes:
       - /data
     environment:
       SECRET_KEY: '0o@t#j(wuvpt5c=%kq-*ns%3y_9*5(h3w9u3zil)b#r%s71kin'
+    ports:
+      - 82:80
+      - 2003:2003
+      - 2004:2004
+      - 7002:7002
+      - 8125:8125/udp
+      - 8126:8126
+      - 3000:3000
     image: ikuturso/grafana-4
 
   kibana:
@@ -453,13 +501,14 @@ services:
     tty: true
     stdin_open: true
     links:
-    - es-client:elasticsearch
+    - es-client-2:elasticsearch
     build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/kibana
 
   minemeld:
     labels:
       io.rancher.container.pull_image: always
       io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity: host_label: capricorn=1
     tty: true
     stdin_open: true
     build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/minemeld
@@ -501,7 +550,7 @@ services:
     volumes_from:
     - reporting-volume
     links:
-    - es-client:es-client
+    - es-client-2:es-client
     - kibana:sm-kibana
     image: ikuturso/siemonster-reporting-4
 
@@ -514,9 +563,6 @@ services:
     volumes:
     - /root/.local/share/data/bconf
     - /opt/skedler
-    links:
-    - es-client:es-client
-    - kibana:sm-kibana
     build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/reporting-volume
     command: /bin/bash
 
@@ -567,8 +613,44 @@ services:
     labels:
       io.rancher.container.pull_image: always
       io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity: host_label: capricorn=1
     tty: true
     stdin_open: true
     image: ikuturso/siemonster-splogtash-1
 
+  logstash:
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity: host_label: proteus=1
+    tty: true
+    stdin_open: true
+    ports:
+    - 3520:3520
+    - 3521:3521
+    - 3524:3524
+    - 3525:3525
+    - 3526:3526
+    - 3527:3527
+    - 3528:3528
+    volumes:
+    - /var/log/
+    links:
+    - es-client-1:elasticsearch
+    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/logstash
+    command: logstash -f /config-dir
+
+  syslog-ng:
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity: host_label: proteus=1
+    tty: true
+    volumes:
+    - /var/log/
+    ports:
+    - 514:514/udp
+    - 514:514
+    - 1516:1516/udp
+    - 1516:1516
 
