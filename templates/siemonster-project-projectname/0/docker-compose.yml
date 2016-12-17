@@ -345,6 +345,8 @@ services:
     environment:
       ES_HEAP_SIZE: 1g
       ES_JAVA_OPTS: -Dmapper.allow_dots_in_name=true
+    ports:
+    - 9200:920
     command: >
       -Des.bootstrap.mlockall=true
       -Des.discovery.zen.ping.multicast.enabled=false
@@ -374,6 +376,8 @@ services:
     environment:
       ES_HEAP_SIZE: 1g
       ES_JAVA_OPTS: -Dmapper.allow_dots_in_name=true
+    ports:
+    - 9200:920
     command: >
       -Des.bootstrap.mlockall=true
       -Des.discovery.zen.ping.multicast.enabled=false
