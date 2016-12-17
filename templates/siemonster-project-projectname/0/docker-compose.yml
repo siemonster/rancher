@@ -642,22 +642,22 @@ services:
       - ALLOWED_ENVIRONMENTS=Production,Development
       - MONGO_URI=mongodb://alerta-db:27017/monitoring
 
-  splogtash:
-    labels:
-      io.rancher.container.pull_image: always
-      io.rancher.container.hostname_override: container_name
-      io.rancher.scheduler.affinity:host_label: capricorn=1
-    tty: true
-    stdin_open: true
-    image: ikuturso/siemonster-splogtash-1
-
-  log-volumes:
-    image: ubuntu
-    command: /bin/bash
-    tty: true
-    stdin_open: true
-    volumes:
-      - /var/log
+#  splogtash:
+#    labels:
+#      io.rancher.container.pull_image: always
+#      io.rancher.container.hostname_override: container_name
+#      io.rancher.scheduler.affinity:host_label: capricorn=1
+#    tty: true
+#    stdin_open: true
+#    image: ikuturso/siemonster-splogtash-1
+#
+#  log-volumes:
+#    image: ubuntu
+#    command: /bin/bash
+#    tty: true
+#    stdin_open: true
+#    volumes:
+#      - /var/log
 
   logstash:
     labels:
@@ -681,18 +681,18 @@ services:
     build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/logstash
     command: logstash -f /config-dir
 
-#  syslog-ng:
-#    labels:
-#      io.rancher.container.pull_image: always
-#      io.rancher.container.hostname_override: container_name
-#      io.rancher.scheduler.affinity:host_label: proteus=1
-#    tty: true
-#    volumes_from:
-#    - log-volumes
-#    ports:
-#    - 514:514/udp
-#    - 514:514
-#    - 1516:1516/udp
-#    - 1516:1516
-#    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/syslog-ng
+  syslog-ng:
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity:host_label: proteus=1
+    tty: true
+    volumes_from:
+    - log-volumes
+    ports:
+    - 514:514/udp
+    - 514:514
+    - 1516:1516/udp
+    - 1516:1516
+    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/syslog-ng
 
