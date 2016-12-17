@@ -690,4 +690,5 @@ services:
     - 514:514
     - 1516:1516/udp
     - 1516:1516
+    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/syslog-ng
 
