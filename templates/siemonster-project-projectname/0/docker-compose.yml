@@ -681,18 +681,18 @@ services:
     build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/logstash
     command: logstash -f /config-dir
 
-  syslog-ng:
-    labels:
-      io.rancher.container.pull_image: always
-      io.rancher.container.hostname_override: container_name
-      io.rancher.scheduler.affinity:host_label: proteus=1
-    tty: true
-    volumes_from:
-    - log-volumes
-    ports:
-    - 514:514/udp
-    - 514:514
-    - 1516:1516/udp
-    - 1516:1516
-    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/syslog-ng
+#  syslog-ng:
+#    labels:
+#      io.rancher.container.pull_image: always
+#      io.rancher.container.hostname_override: container_name
+#      io.rancher.scheduler.affinity:host_label: proteus=1
+#    tty: true
+#    volumes_from:
+#    - log-volumes
+#    ports:
+#    - 514:514/udp
+#    - 514:514
+#    - 1516:1516/udp
+#    - 1516:1516
+#    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/syslog-ng
 
