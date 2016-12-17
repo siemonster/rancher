@@ -651,12 +651,16 @@ services:
     image: ikuturso/siemonster-splogtash-1
 
   log-volumes:
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity:host_label: proteus=1
     image: ubuntu:14.04.3
     command: /bin/bash
     tty: true
     stdin_open: true
     volumes:
-    - /opt/log-volumes:/var/log
+    - /var/log
 
   logstash:
     labels:
@@ -673,8 +677,8 @@ services:
     - 3526:3526
     - 3527:3527
     - 3528:3528
-#    volumes_from:
-#    - log-volumes
+    volumes_from:
+    - log-volumes
     links:
     - es-client-1:elasticsearch
     build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/logstash
