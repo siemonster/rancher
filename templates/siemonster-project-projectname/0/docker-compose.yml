@@ -658,14 +658,32 @@ services:
     volumes:
     - /var/log
 
+  logstash:
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity:host_label: proteus=1
+    tty: true
+    stdin_open: true
+    ports:
+    - 3520:3520
+    - 3521:3521
+    - 3524:3524
+    - 3525:3525
+    - 3526:3526
+    - 3527:3527
+    - 3528:3528
+    links:
+    - es-client-1:elasticsearch
+    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/logstash
+    command: logstash -f /config-dir
+
   syslog-ng:
     labels:
       io.rancher.container.pull_image: always
       io.rancher.container.hostname_override: container_name
       io.rancher.scheduler.affinity:host_label: proteus=1
     tty: true
-    volumes_from:
-    - log-volumes
     ports:
     - 514:514/udp
     - 514:514
