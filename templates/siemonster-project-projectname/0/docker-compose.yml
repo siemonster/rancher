@@ -656,7 +656,7 @@ services:
     tty: true
     stdin_open: true
     volumes:
-      - /var/log
+    - /var/log
 
   logstash:
     labels:
