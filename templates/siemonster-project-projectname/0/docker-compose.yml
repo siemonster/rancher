@@ -422,6 +422,7 @@ services:
       -Des.threadpool.bulk.queue_size=500
     labels:
       io.rancher.scheduler.affinity:host_label: kraken=1
+      io.rancher.sidekicks: es-data-node1-volume
 
   es-data-node1-volume:
     labels:
@@ -433,6 +434,8 @@ services:
     - /usr/share/elasticsearch/data
     build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/es-data-node1-volume
     command: /bin/bash
+    labels:
+      io.rancher.scheduler.affinity:host_label: tiamat=1
 
   es-data-node2:
     volumes_from:
@@ -465,7 +468,7 @@ services:
       -Des.threadpool.bulk.queue_size=500
     labels:
       io.rancher.scheduler.affinity:host_label: tiamat=1
-
+      io.rancher.sidekicks: es-data-node2-volume
 
   es-data-node1-volume:
     labels:
@@ -477,6 +480,8 @@ services:
     - /usr/share/elasticsearch/data
     build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/es-data-node1-volume
     command: /bin/bash
+    labels:
+      io.rancher.scheduler.affinity:host_label: tiamat=1
 
   es2graphite:
     labels:
