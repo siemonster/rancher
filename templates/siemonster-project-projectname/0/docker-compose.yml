@@ -656,7 +656,7 @@ services:
     tty: true
     stdin_open: true
     volumes:
-    - /var/log
+    - /opt/log-volumes:/var/log
 
   logstash:
     labels:
@@ -673,6 +673,8 @@ services:
     - 3526:3526
     - 3527:3527
     - 3528:3528
+#    volumes_from:
+#    - log-volumes
     links:
     - es-client-1:elasticsearch
     build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/logstash
@@ -684,6 +686,8 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.scheduler.affinity:host_label: proteus=1
     tty: true
+    volumes_from:
+    - log-volumes
     ports:
     - 514:514/udp
     - 514:514
