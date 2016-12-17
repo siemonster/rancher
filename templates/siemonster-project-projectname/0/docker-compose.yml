@@ -2,7 +2,7 @@ version: '2'
 services:
 
   siemonster:
-    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git
+    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}
     environment:
       SITE_DNAME: ${SITE_DNAME}
       SITE_NAME: siemonster
