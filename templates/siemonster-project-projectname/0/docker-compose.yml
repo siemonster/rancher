@@ -42,7 +42,7 @@ services:
       DNS_RESOLVER: 169.254.169.250
       ADDITIONAL_CONFIG: |
         server {
-          server_name {{SITE_DNAME}} app.*;
+          server_name {{SITE_DNAME}} app.* [a-z0-9-]+\.[a-z0-9-]+\.[a-z]+$$;
           resolver 169.254.169.250 valid=1s;
           set $$hostpass "siemonster";
           location / {
@@ -437,7 +437,7 @@ services:
     volumes:
     - /usr/share/elasticsearch/data
     image: alpine
-    command: /bin/bash
+    command:  /bin/ash
     labels:
       io.rancher.scheduler.affinity:host_label: kraken=1
 
@@ -483,7 +483,7 @@ services:
     volumes:
     - /usr/share/elasticsearch/data
     image: alpine
-    command: /bin/bash
+    command: /bin/ash
     labels:
       io.rancher.scheduler.affinity:host_label: tiamat=1
 
