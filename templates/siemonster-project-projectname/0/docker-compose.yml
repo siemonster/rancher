@@ -42,7 +42,7 @@ services:
       DNS_RESOLVER: 169.254.169.250
       ADDITIONAL_CONFIG: |
         server {
-          server_name app.*;
+          server_name {{SITE_DNAME}} app.*;
           resolver 169.254.169.250 valid=1s;
           set $$hostpass "siemonster";
           location / {
