@@ -650,18 +650,6 @@ services:
     stdin_open: true
     image: ikuturso/siemonster-splogtash-1
 
-  log-volumes:
-    labels:
-      io.rancher.container.pull_image: always
-      io.rancher.container.hostname_override: container_name
-      io.rancher.scheduler.affinity:host_label: proteus=1
-    image: ubuntu:14.04.3
-    command: /bin/bash
-    tty: true
-    stdin_open: true
-    volumes:
-    - /var/log
-
   logstash:
     labels:
       io.rancher.container.pull_image: always
@@ -677,8 +665,8 @@ services:
     - 3526:3526
     - 3527:3527
     - 3528:3528
-#    volumes_from:
-#    - log-volumes
+    volumes:
+    - /opt/containers/${SITE_DNAME}/var/log:/var/log
     links:
     - es-client-1:elasticsearch
     - health
@@ -691,8 +679,8 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.scheduler.affinity:host_label: proteus=1
     tty: true
-#    volumes_from:
-#    - log-volumes
+    volumes:
+    - /opt/containers/${SITE_DNAME}/var/log:/var/log
     ports:
     - 514:514/udp
     - 514:514
