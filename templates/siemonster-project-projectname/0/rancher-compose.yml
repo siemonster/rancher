@@ -13,7 +13,18 @@
       required: true
       default: master
       type: string
-
+    - variable: ES_DATA_HEAP_SIZE
+      description: Specify the branch name to checkout.
+      label: Branch name
+      required: true
+      default: 2g
+      type: string
+    - variable: ES_CLIENT_HEAP_SIZE
+      description: Specify the branch name to checkout.
+      label: Branch name
+      required: true
+      default: 1g
+      type: string
 
 siemonster:
   scale: 1
