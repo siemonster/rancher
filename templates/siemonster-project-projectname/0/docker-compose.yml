@@ -681,7 +681,8 @@ services:
 #    - log-volumes
     links:
     - es-client-1:elasticsearch
-    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/logstash
+    - health
+    image: ikuturso/logstash:data
     command: logstash -f /config-dir
 
   syslog-ng:
