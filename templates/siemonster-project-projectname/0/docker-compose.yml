@@ -436,7 +436,7 @@ services:
     stdin_open: true
     volumes:
     - /usr/share/elasticsearch/data
-    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/es-data-node1-volume
+    image: alpine
     command: /bin/bash
     labels:
       io.rancher.scheduler.affinity:host_label: kraken=1
@@ -482,7 +482,7 @@ services:
     stdin_open: true
     volumes:
     - /usr/share/elasticsearch/data
-    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/es-data-node1-volume
+    image: alpine
     command: /bin/bash
     labels:
       io.rancher.scheduler.affinity:host_label: tiamat=1
