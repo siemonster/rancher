@@ -340,8 +340,8 @@ services:
     ulimits:
       nofile: 65536
       memlock: -1
-    mem_limit: 2102410241024
-    memswap_limit: 2102410241024
+    mem_limit: 2024024024
+    memswap_limit: 2024024024
     image: ikuturso/siemonster-alpine-es
     environment:
       ES_HEAP_SIZE: ${ES_CLIENT_HEAP_SIZE}
@@ -371,8 +371,8 @@ services:
     ulimits:
       nofile: 65536
       memlock: -1
-    mem_limit: 2102410241024
-    memswap_limit: 2102410241024
+    mem_limit: 2024024024
+    memswap_limit: 2024024024
     image: ikuturso/siemonster-alpine-es
     environment:
       ES_HEAP_SIZE: ${ES_CLIENT_HEAP_SIZE}
@@ -404,8 +404,8 @@ services:
     ulimits:
       nofile: 65536
       memlock: -1
-    mem_limit: 4102410241024
-    memswap_limit: 4102410241024
+    mem_limit: 4024024024
+    memswap_limit: 4024024024
     environment:
       ES_HEAP_SIZE: ${ES_DATA_HEAP_SIZE}
     image: ikuturso/siemonster-alpine-es
@@ -450,8 +450,8 @@ services:
     ulimits:
       nofile: 65536
       memlock: -1
-    mem_limit: 4102410241024
-    memswap_limit: 4102410241024
+    mem_limit: 4024024024
+    memswap_limit: 4024024024
     environment:
       ES_HEAP_SIZE: ${ES_DATA_HEAP_SIZE}
     image: ikuturso/siemonster-alpine-es
