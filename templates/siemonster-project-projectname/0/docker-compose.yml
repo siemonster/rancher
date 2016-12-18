@@ -287,6 +287,7 @@ services:
     stdin_open: true
     links:
     - es-client-2:es-client
+    - gmailrelay
     hostname: 411.${SITE_DNAME}
 
   411-volume:
@@ -688,4 +689,19 @@ services:
     - 1516:1516/udp
     - 1516:1516
     build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/syslog-ng
+    
+   gmailrelay:
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity:host_label: capricorn=1
+    tty: true
+    ports:
+    - 9025:25
+    environment:
+      - SYSTEM_TIMEZONE="America/Chigaco"
+      - MYNETWORKS="10.0.0.0/8 192.168.0.0/16 172.0.0.0/8"
+      - EMAIL="user@gmail.com"
+      - EMAILPASS=""
+    image: lylescott/postfix-gmail-relay
 
