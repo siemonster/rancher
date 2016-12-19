@@ -490,7 +490,7 @@ services:
       io.rancher.scheduler.affinity:host_label: tiamat=1
 
   elasticloader:
-    image: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/elasticloader
+    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/elasticloader
     stdin_open: true
     tty: true
     links:
