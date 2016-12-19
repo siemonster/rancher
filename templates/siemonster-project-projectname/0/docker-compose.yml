@@ -489,6 +489,18 @@ services:
     labels:
       io.rancher.scheduler.affinity:host_label: tiamat=1
 
+  elasticloader:
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.hostname_override: container_name
+    tty: true
+    stdin_open: true
+    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/elasticloader
+    labels:
+      io.rancher.scheduler.affinity:host_label: tiamat=1
+    links:
+    - es-client-1:es-client
+
   es2graphite:
     labels:
       io.rancher.container.pull_image: always
@@ -703,7 +715,7 @@ services:
     environment:
       - SYSTEM_TIMEZONE="America/Chigaco"
       - MYNETWORKS="10.0.0.0/8 192.168.0.0/16 172.0.0.0/8"
-      - EMAIL="user@gmail.com"
-      - EMAILPASS=""
+      - EMAIL=${GMAILRELAY_EMAIL}
+      - EMAILPASS=${GMAILRELAY_EMAILPASS}
     image: lylescott/postfix-gmail-relay
 
