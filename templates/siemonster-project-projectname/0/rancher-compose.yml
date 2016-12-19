@@ -13,13 +13,13 @@
       required: true
       default: master
       type: string
-    - variable: ES_DATA_HEAP_SIZE
-      label: ES_DATA_HEAP_SIZE
+    - variable: ELASTICSEARCH_KRAKEN_TIAMAT_HEAP_SIZE
+      label: ELASTICSEARCH_KRAKEN_TIAMAT_HEAP_SIZE
       required: true
       default: 2g
       type: string
-    - variable: ES_CLIENT_HEAP_SIZE
-      label: ES_DATA_HEAP_SIZE
+    - variable: ELASTICSEARCH_PROTEUS_CAPRICORN_HEAP_SIZE
+      label: ELASTICSEARCH_PROTEUS_CAPRICORN_HEAP_SIZE
       required: true
       default: 1g
       type: string
