@@ -489,18 +489,28 @@ services:
     labels:
       io.rancher.scheduler.affinity:host_label: tiamat=1
 
+  #elasticloader:
+  #  labels:
+  #    io.rancher.container.start_once: 'true'
+  #    io.rancher.container.pull_image: always
+  #    io.rancher.container.hostname_override: container_name
+  #  tty: true
+  #  stdin_open: true
+  #  build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/elasticloader
+  #  labels:
+  #    io.rancher.scheduler.affinity:host_label: tiamat=1
+  #  links:
+  #  - es-client-1:es-client
+
   elasticloader:
-    labels:
-      io.rancher.container.start_once: 'true'
-      io.rancher.container.pull_image: always
-      io.rancher.container.hostname_override: container_name
-    tty: true
+    image: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/elasticloader
     stdin_open: true
-    build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/elasticloader
-    labels:
-      io.rancher.scheduler.affinity:host_label: tiamat=1
+    tty: true
     links:
     - es-client-1:es-client
+    labels:
+      io.rancher.scheduler.affinity:host_label: tiamat=1
+      io.rancher.container.start_once: 'true'
 
   es2graphite:
     labels:
