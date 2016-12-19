@@ -535,6 +535,8 @@ services:
       io.rancher.scheduler.affinity:host_label: capricorn=1
     tty: true
     stdin_open: true
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
     links:
     - es-client-2:elasticsearch
     build: http://proxy.git-proxy/git@github.com:siemonster/Project.git#${BRANCH_NAME}:containers/kibana
