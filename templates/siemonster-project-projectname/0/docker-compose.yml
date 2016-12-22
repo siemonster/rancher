@@ -341,8 +341,6 @@ services:
     ulimits:
       nofile: 65536
       memlock: -1
-    mem_limit: 2024024024
-    memswap_limit: 2024024024
     image: ikuturso/siemonster-alpine-es
     environment:
       ES_HEAP_SIZE: ${ELASTICSEARCH_PROTEUS_CAPRICORN_HEAP_SIZE}
@@ -362,7 +360,7 @@ services:
       -Des.action.auto_create_index=true
       -Des.action.disable_delete_all_indices=true
       -Des.node.data=false
-    hostname: capricorn
+    hostname: proteus
     labels:
       io.rancher.scheduler.affinity:host_label: proteus=1
 
@@ -372,8 +370,6 @@ services:
     ulimits:
       nofile: 65536
       memlock: -1
-    mem_limit: 2024024024
-    memswap_limit: 2024024024
     image: ikuturso/siemonster-alpine-es
     environment:
       ES_HEAP_SIZE: ${ELASTICSEARCH_PROTEUS_CAPRICORN_HEAP_SIZE}
@@ -405,8 +401,6 @@ services:
     ulimits:
       nofile: 65536
       memlock: -1
-    mem_limit: 4024024024
-    memswap_limit: 4024024024
     environment:
       ES_HEAP_SIZE: ${ELASTICSEARCH_KRAKEN_TIAMAT_HEAP_SIZE}
     image: ikuturso/siemonster-alpine-es
@@ -451,8 +445,6 @@ services:
     ulimits:
       nofile: 65536
       memlock: -1
-    mem_limit: 4024024024
-    memswap_limit: 4024024024
     environment:
       ES_HEAP_SIZE: ${ELASTICSEARCH_KRAKEN_TIAMAT_HEAP_SIZE}
     image: ikuturso/siemonster-alpine-es
