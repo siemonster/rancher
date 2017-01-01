@@ -332,6 +332,8 @@ services:
     environment:
       COLLECTL_ARGS: --export graphite,health
     network_mode: host
+    links:
+    - health:health
     image: ikuturso/siemonster-collectl
     stdin_open: true
 
