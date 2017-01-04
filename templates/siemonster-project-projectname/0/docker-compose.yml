@@ -675,10 +675,12 @@ services:
     - 3528:3528
     volumes:
     - /opt/containers/${SITE_DNAME}/var/log:/var/log
+    environment:
+      - SERVER_CN=${SITE_DNAME}
     links:
     - es-client-1:elasticsearch
     - health
-    image: ikuturso/logstash:data
+    image: ikuturso/logstash:ssl
     command: logstash -f /config-dir
 
   syslog-ng:
